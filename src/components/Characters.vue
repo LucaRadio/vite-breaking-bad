@@ -20,15 +20,18 @@ export default {
             axios.get("https://swapi.dev/api/people/")
                 .then(resp => {
                     this.List.characters = resp.data.results
-                    this.List.loading = false;
+                    setTimeout(() => { this.List.loading = false }, 3000)
                 })
                 .catch(() => {
-                    this.error = true
+                    this.error = true;
+                    this.List.loading = false;
+
                 })
         }
     },
     created() {
-        this.getCharacter();
+        this.getCharacter()
+
     }
 }
 </script>
@@ -39,7 +42,7 @@ export default {
         <div class="error alert alert-danger mt-3" v-if="error">Attenzione , richesta HTTP non trovato! Controllare URL
             e riprovare</div>
         <div class="row row-cols-5 g-3 mt-3">
-            <div class="col" v-for="character in this.List.characters" v-if="this.List.characters">
+            <div class="col" v-for="character in this.List.characters">
                 <SingleCharacter :character="character" />
             </div>
         </div>
