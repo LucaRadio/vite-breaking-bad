@@ -7,9 +7,9 @@ export default {
 <template>
     <header class="d-flex align-items-center">
         <div class="img-container">
-            <img src="../assets/breaking-bad-logo.png" alt="Logo" class="img-fluid">
+            <img src="../assets/Rick_and_Morty.svg.png" alt="Logo" class="img-fluid">
         </div>
-        <h1 class="text-white">Breaking Bad API</h1>
+        <h1 class="text-white">API</h1>
     </header>
 </template>
 

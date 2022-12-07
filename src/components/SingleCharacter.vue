@@ -12,10 +12,10 @@ export default {
 <template>
     <div class="card">
         <div class="card-body">
+            <img :src="character.image" class="card-img-top">
             <h5 class="card-title">{{ character.name }}</h5>
-            <p class="card-text">Height: {{ character.height }}</p>
-            <p class="card-text">Skin color: {{ character.skin_color }}</p>
-            <p class="card-text">Birtday Year: {{ character.birth_year }}</p>
+            <p class="card-text">Gender: {{ character.gender }}</p>
+            <p class="card-text">Status: {{ character.status }}</p>
         </div>
     </div>
 </template>

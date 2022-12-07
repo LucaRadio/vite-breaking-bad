@@ -4,3 +4,4 @@ export const List = reactive({
     characters: [],
     loading: false
 })
+
