@@ -1,33 +1,24 @@
 <script>
-import { List } from '../store';
+import { List,getSpeciesList, getStatusList,getTypeList } from '../store';
 
 export default {
     data() {
         return {
             List,
-            speciesList: [],
-            specie: ""
+            status:'',
+            species:"",
+            type:"",
         }
     },
     methods: {
-        getSpeciesAmount() {
-            const species = []
-
-            this.List.characters.forEach(character => {
-                if (!species.includes(character.species)) {
-                    species.push(character.species);
-                }
-            });
-            return species;
-        },
-        sendCommand() {
-            this.$emit("getFilteredCharacter", this.specie)
-            console.log(this.speciesList);
+        sendCommand(){
+            this.$emit("statusSend", this.status,this.species,this.type)
         }
-
     },
     created() {
-        this.getSpeciesAmount();
+        getSpeciesList(),
+        getStatusList();
+        getTypeList();
     }
 
 
@@ -36,9 +27,18 @@ export default {
 </script>
 
 <template>
-    <form @submit.prevent="sendCommand()" class="d-flex">
-        <select class="form-control" v-model="specie">
-            <option v-for="opt in getSpeciesAmount()">{{ opt }}</option>
+    <form class="d-flex" @submit.prevent="sendCommand">
+        <select class="form-control" v-model="status">
+            <option>All</option>
+            <option v-for="Status in List.StatusList">{{Status}}</option>
+        </select>
+        <select class=" ms-3 form-control" v-model="species">
+            <option>All</option>
+            <option v-for="species in List.speciesList">{{species}}</option>
+        </select>
+        <select class=" ms-3 form-control" v-model="type">
+            <option>All</option>
+            <option v-for="type in List.typeList">{{type}}</option>
         </select>
         <button class="ms-3 btn btn-primary">Filter</button>
     </form>

@@ -1,13 +1,17 @@
 <script>
-import Characters from './Characters.vue';
 
 
+import Characters from "./Characters.vue";
 export default {
-    components: { Characters },
-    methods: {
-        refresh() {
-            console.log("ciao");
+    components:{
+    Characters
+},
+    data(){
+        return{
         }
+    },
+    methods: {
+
     }
 
 }
@@ -16,14 +20,10 @@ export default {
 
 <template>
     <div class="container">
-
-
         <Characters />
     </div>
 </template>
 
 <style scoped>
-select {
-    width: auto;
-}
+
 </style>

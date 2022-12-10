@@ -1,64 +1,72 @@
 <script>
-import SingleCharacter from './SingleCharacter.vue';
-import { List } from "../store.js"
-import MyFilter from './MyFilter.vue';
-
-import axios from "axios"
-export default {
-    components: { SingleCharacter, MyFilter },
-    data() {
-        return {
+import axios from 'axios';
+// import axios from 'axios';
+import{getCharacters} from "../store";
+import { List } from "../store";
+import MyFilter from "./MyFilter.vue";
+import SingleCharacter from "./SingleCharacter.vue";
+export default{
+    components:{ SingleCharacter, MyFilter },
+    created(){
+        getCharacters(this.List.Link);
+    },
+    data(){
+        return{
             List,
-            error: false,
-            allCharacter: '',
-            specieSelected: ''
+            error:false,
 
         }
     },
-    methods: {
-        getCharacter() {
-            this.List.loading = true;
-            this.List.characters = [];
-            axios.get("https://rickandmortyapi.com/api/character/", {
-                params: {
-                    species: this.specieSelected
-                }
-            })
-                .then(resp => {
-                    this.allCharacter = resp.data.info.count;
-                    this.List.characters = resp.data.results
-                    setTimeout(() => { this.List.loading = false }, 1000)
-                })
-                .catch(() => {
-                    this.error = true;
-                    this.List.loading = false;
-
-                })
-            this.specieSelected = ""
+    methods:{
+        filterList(status,species,type){
+            if(status ==="All"){
+                List.status=''
+            }else{
+                List.status= status
+            };
+            if(species ==="All"){
+                List.species=''
+            }else{
+                List.species= species
+            };
+            if(type ==="All"){
+                List.type=''
+            }else{
+                List.type= type
+            }
+            getCharacters(this.List.Link)
         },
-
-        refresh(specie) {
-            this.specieSelected = specie
-            this.getCharacter()
+        changePage(increment){
+        if(increment){
+            this.List.changePageCount +=1;
+        }else{
+            this.List.changePageCount -=1;
         }
-    },
-    created() {
-        this.getCharacter()
-
+        if(this.List.changePageCount<=0){
+            this.List.changePageCount=0
+            getCharacters(this.List.Link);
+        }else{
+            getCharacters(this.List.Link);
+        }
+        },
     }
 }
 </script>
 
 <template>
-    <MyFilter @getFilteredCharacter="refresh" />
+    <MyFilter @statusSend="filterList"/>
     <div class="container bg-white mt-4 p-5">
-        <div class="bg-dark text-white fw-bold p-3 fs-4">Found {{ allCharacter }} characters</div>
-        <div class="error alert alert-danger mt-3" v-if="error">Attenzione , richesta HTTP non trovato! Controllare URL
+        <div class="alert alert-info">This page has {{List.count}} characters</div>
+        <div class="input-group mb-3 d-flex justify-content-center">
+            <button @click="changePage(false)" class="btn btn-info">Prev</button>
+            <button @click="changePage(true)" class="btn btn-info">Next</button>
+        </div>
+
+        
+        <div class="error alert alert-danger mt-3 " v-if="this.error">Attenzione , richesta HTTP non trovato! Controllare URL
             e riprovare</div>
         <div class="row row-cols-5 g-3 mt-3">
-            <div class="col" v-for="character in this.List.characters">
-                <SingleCharacter :character="character" />
-            </div>
+            <SingleCharacter :character="List.characters"/>
         </div>
     </div>
 </template>
