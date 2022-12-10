@@ -13,7 +13,6 @@ export default{
     data(){
         return{
             List,
-            error:false,
 
         }
     },
@@ -56,16 +55,16 @@ export default{
 <template>
     <MyFilter @statusSend="filterList"/>
     <div class="container bg-white mt-4 p-5">
-        <div class="alert alert-info">This page has {{List.count}} characters</div>
-        <div class="input-group mb-3 d-flex justify-content-center">
+        <div class="alert alert-info" v-if="!List.error">This page has {{List.count}} characters</div>
+        <div class="input-group mb-3 d-flex justify-content-center" >
             <button @click="changePage(false)" class="btn btn-info">Prev</button>
             <button @click="changePage(true)" class="btn btn-info">Next</button>
         </div>
 
         
-        <div class="error alert alert-danger mt-3 " v-if="this.error">Attenzione , richesta HTTP non trovato! Controllare URL
+        <div class="error alert alert-danger mt-3 " v-if="List.error">Attenzione , richesta HTTP non trovato! Controllare URL
             e riprovare</div>
-        <div class="row row-cols-5 g-3 mt-3">
+        <div class="row row-cols-5 g-3 mt-3"  v-if="!List.error">
             <SingleCharacter :character="List.characters"/>
         </div>
     </div>

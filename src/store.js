@@ -28,8 +28,8 @@ export function getCharacters(link){
         List.characters = resp.data.results;
     })
     .catch(() => {
-    this.error = true;
-    this.List.loading = false;
+    List.error = true;
+    List.loading = false;
  })
 }
 
@@ -44,6 +44,10 @@ export function getStatusList(){
         });
         List.StatusList = status
     })
+    .catch(() => {
+        List.error = true;
+        List.loading = false;
+     })
 }
 
 export function getSpeciesList(){
@@ -57,6 +61,10 @@ export function getSpeciesList(){
         });
         List.speciesList = species
     })
+    .catch(() => {
+        List.error = true;
+        List.loading = false;
+     })
 }
 export function getTypeList(){
     const type=[];
@@ -69,5 +77,9 @@ export function getTypeList(){
         });
         List.typeList = type
     })
+    .catch(() => {
+        List.error = true;
+        List.loading = false;
+     })
 }
 

@@ -13,6 +13,7 @@ export default {
     methods: {
         sendCommand(){
             this.$emit("statusSend", this.status,this.species,this.type)
+            List.error=false
         }
     },
     created() {
@@ -38,7 +39,7 @@ export default {
         </select>
         <select class=" ms-3 form-control" v-model="type">
             <option>All</option>
-            <option v-for="type in List.typeList">{{type}}</option>
+            <option v-for="typesingle in List.typeList">{{typesingle}}</option>
         </select>
         <button class="ms-3 btn btn-primary">Filter</button>
     </form>
